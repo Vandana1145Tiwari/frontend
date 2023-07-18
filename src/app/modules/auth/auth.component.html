@@ -1,0 +1,85 @@
+<div class="login">
+  <div class="site-content">
+    <main>
+      <div
+        class="wrapper flow"
+        data-size="xs"
+      >
+        <div class="headline flow">
+          <h1 class="headline__title">Book Management</h1>
+          <p>
+            <a
+              title="Create a Clario account"
+              class="link link-bg"
+              (click)="onSwitchMode()"
+              >{{ isLoginMode ? "Don't have an account?" : "Already have an account?" }}</a
+            >
+          </p>
+        </div>
+
+        <form
+          [formGroup]="loginForm"
+          class="flow"
+        >
+          <fieldset>
+            <div
+              class="fieldset-item"
+              [ngClass]="{ 'is-negative': loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched }"
+            >
+              <label for="userName">Username</label>
+              <input
+                id="userName"
+                name="UserName"
+                required=""
+                type="text"
+                class="width-max-unset"
+                formControlName="userName"
+              />
+              <small
+                class="is-negative"
+                *ngIf="loginForm.get('userName')?.errors?.required && loginForm.get('userName')?.touched"
+                >This field is required</small
+              >
+            </div>
+            <div
+              class="fieldset-item"
+              [ngClass]="{ 'is-negative': loginForm.get('password')?.invalid && loginForm.get('password')?.touched }"
+            >
+              <label for="password">Password</label>
+              <input
+                id="password"
+                name="Password"
+                required=""
+                type="text"
+                class="width-max-unset"
+                formControlName="password"
+              />
+              <small
+                class="is-negative"
+                *ngIf="loginForm.get('password')?.errors?.required && loginForm.get('password')?.touched"
+                >This field is required</small
+              >
+            </div>
+            <div
+              class="notification"
+              data-type="negative"
+              *ngIf="!!errorMessage"
+            >
+              <span>{{ errorMessage }}</span>
+            </div>
+          </fieldset>
+          <button
+            class="button"
+            data-type="primary"
+            type="submit"
+            data-display="bloc"
+            (click)="onSubmit()"
+            [disabled]="!loginForm.valid"
+          >
+            {{ isLoginMode ? "Login" : "Register" }}
+          </button>
+        </form>
+      </div>
+    </main>
+  </div>
+</div>

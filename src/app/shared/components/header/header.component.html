@@ -1,0 +1,69 @@
+<header
+  class="site-head"
+  role="banner"
+  *ngIf="isAuthenticated"
+>
+  <div class="site-header__inner repel">
+    <div class="cluster">
+      <a
+        class="button"
+        data-type="clear"
+        data-size="small"
+        href="books"
+      >
+        Books
+      </a>
+      <a
+        class="button"
+        data-type="clear"
+        data-size="small"
+        href="users"
+      >
+        Users
+      </a>
+    </div>
+    <div class="actions-group cluster">
+      <div
+        class="dropdown"
+        data-align="end"
+        id="dropdown-panel-3"
+      >
+        <button
+          type="button"
+          class="avatar dropdown__control bg-comp-1"
+          aria-expanded="false"
+          aria-controls="dropdown-panel-3"
+        >
+          <div
+            class="avatar__initials"
+            data-initials="PQ"
+            data-size="lg"
+          >
+            {{ initials }}
+          </div>
+        </button>
+        <div
+          class="dropdown__panel"
+          id="dropdown-panel-3"
+        >
+          <ul role="list">
+            <li>
+              <a
+                class="link link-underline"
+                href=""
+                >{{ username }}</a
+              >
+            </li>
+            <li (click)="onLogout()">
+              <a
+                class="link link-underline"
+                href="javascript:void(0)"
+                >Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

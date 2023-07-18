@@ -1,17 +1,15 @@
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { Book } from "../shared/models/book.model";
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { api, apiBaseUrl } from 'src/app/config/api';
+import { Book } from '../../shared/models';
 
-const apiBaseUrl = 'https://localhost:7173';
 @Injectable({
-    providedIn: 'root',
-  })
-  export class BooksApiService {
-    constructor(private http: HttpClient) { }
-    getBooks(): Observable<Book[]> {
-        return this.http
-          .get<Book[]>(`${apiBaseUrl}/books`);
-      }
-    
+  providedIn: 'root'
+})
+export class BooksApiService {
+  constructor(private http: HttpClient) {}
+  getBooks(): Observable<Book[]> {
+    return this.http.get<Book[]>(api.book.allBooks);
   }
+}

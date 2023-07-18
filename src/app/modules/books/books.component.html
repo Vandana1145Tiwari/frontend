@@ -1,11 +1,12 @@
-<cr-cdk-interactive-table 
-    [dataSource]="booksService"
-    [columnDefinitions]="booksTableConfig.tableColumnDefinitions"
-    [displayedColumns]="booksTableConfig.displayedColumns" 
-    [state]="tableState"
-    [noDataTemplate]="noDataTemplate">
+<cr-cdk-interactive-table
+  [dataSource]="booksService"
+  [columnDefinitions]="booksTableConfig.tableColumnDefinitions"
+  [displayedColumns]="booksTableConfig.displayedColumns"
+  [state]="tableState"
+  [noDataTemplate]="noDataTemplate"
+>
 </cr-cdk-interactive-table>
 
 <ng-template #noDataTemplate>
-    <div class="t-center">No data available</div>
-  </ng-template>
+  <div class="t-center">No data available</div>
+</ng-template>
