@@ -13,7 +13,7 @@ export class BooksComponent implements OnInit {
   booksTableConfig = booksTableConfig;
   tableState = CdkTableState.Loading;
 
-  constructor(private route: ActivatedRoute, private router: Router, public booksService: BooksService) {}
+  constructor(private route: ActivatedRoute, public booksService: BooksService) {}
 
   ngOnInit(): void {
     this.route.data.subscribe((resp) => {

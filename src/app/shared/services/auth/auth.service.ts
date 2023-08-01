@@ -1,7 +1,7 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, catchError, of, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { AuthResponseData, User } from '../../models';
 import { api } from 'src/app/config/api';
 
@@ -32,9 +32,6 @@ export class AuthService {
         { responseType: 'text' }
       )
       .pipe(
-        tap((responseData) => {
-          console.debug('ResponseData', responseData);
-        }),
         catchError(this.handleError)
       );
   }
@@ -62,7 +59,7 @@ export class AuthService {
 
   private handleAuthentication(id: string, username: string, token: string) {
     const user: User = { id, username, token };
-    console.debug('[DEBUG-AUTH-SERVICE] new User', user);
+    console.error('[DEBUG-AUTH-SERVICE] new User', user);
     localStorage.setItem(USER_AUTH_COOKIE, JSON.stringify(user));
     this.userSubject.next(user);
   }

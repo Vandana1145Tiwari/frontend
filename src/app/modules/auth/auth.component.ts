@@ -1,6 +1,5 @@
-import { Component, Input, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Component, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '../../shared/services';
 import { Router } from '@angular/router';
@@ -10,43 +9,32 @@ import { Router } from '@angular/router';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
 })
-export class AuthComponent implements OnDestroy {
+export class AuthComponent {
   @Input() showSidebar: boolean = false;
 
-  public error = false;
   public errorMessage: string = '';
+  public message: string = '';
   public isLoginMode = true;
   public loginForm: FormGroup = this.formBuilder.group({
-    userName: [null, Validators.required],
+    username: [null, Validators.required],
     password: [null, Validators.required]
   });
 
-  private closeSubscription: Subscription;
-
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {}
-
-  ngOnDestroy(): void {
-    if (this.closeSubscription) {
-      this.closeSubscription.unsubscribe();
-    }
-  }
 
   public onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
   }
 
   public onSubmit(): void {
+    this.clearMessages();
     this.loginForm.markAllAsTouched();
     if (this.loginForm.invalid) {
       return;
     }
 
-    this.handleError(null, false);
-
-    const username = this.loginForm.get('userName')?.value;
+    const username = this.loginForm.get('username')?.value;
     const password = this.loginForm.get('password')?.value;
-
-    console.log('Username', username, 'Password', password);
 
     if (this.isLoginMode) {
       this.authService.login(username, password).subscribe({
@@ -54,28 +42,28 @@ export class AuthComponent implements OnDestroy {
           console.log('Successfully logged in!', response);
           this.router.navigate(['/books']);
         },
-        error: (errorMessage) => {
-          console.error('Unsuccessful');
-          this.handleError(errorMessage, true);
+        error: (err) => {
+          console.error('Unsuccessful', err.message);
+          this.errorMessage = err.message;
         }
       });
     } else {
-      // TODO: To be completed
       this.authService.register(username, password).subscribe({
         next: (response) => {
           console.log('Successfully registered!', response);
-          this.router.navigate(['/books']);
+          this.message = 'Successfully registered!';
+          this.isLoginMode = true;
         },
-        error: (errorMessage) => {
-          console.error('Registration failed');
-          this.handleError(errorMessage, true);
+        error: (err) => {
+          console.error('Registration failed', err.message);
+          this.errorMessage = err.message;
         }
       });
     }
   }
 
-  private handleError(errorMessage: string, errorFlag: boolean) {
-    this.errorMessage = errorMessage;
-    this.error = errorFlag;
+  private clearMessages(): void {
+    this.message = '';
+    this.errorMessage = '';
   }
 }

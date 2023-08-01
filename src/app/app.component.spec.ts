@@ -1,15 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-
+import { CrShadowDomModule } from '@crystal/ng-shadow-dom';
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        CrShadowDomModule,
       ],
       declarations: [
-        AppComponent
+        AppComponent,
       ],
     }).compileComponents();
   });
